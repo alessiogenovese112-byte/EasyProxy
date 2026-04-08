@@ -149,6 +149,10 @@
                     <input id="extractorUrl" type="url" placeholder="https://host.example/embed/..."
                         class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 text-slate-900 dark:text-white focus:outline-none focus:border-sky-500">
                 </div>
+                <label class="flex items-center gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/30 px-4 py-3 text-sm text-slate-700 dark:text-slate-200">
+                    <input id="extractorRedirectStream" type="checkbox" class="h-4 w-4 accent-sky-600">
+                    <span>Aggiungi <code>redirect_stream=true</code> per ottenere direttamente lo stream/proxy URL</span>
+                </label>
                 <div class="flex gap-3">
                     <button id="generateExtractor" class="px-5 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-95 transition">
                         Genera Extractor URL
@@ -288,6 +292,7 @@
             const host = document.getElementById('extractorHost').value.trim();
             const url = document.getElementById('extractorUrl').value.trim();
             const apiPassword = document.getElementById('apiPassword').value.trim();
+            const redirectStream = document.getElementById('extractorRedirectStream').checked;
             const result = document.getElementById('extractorResult');
 
             if (!host || !url) {
@@ -298,6 +303,9 @@
             const params = new URLSearchParams();
             params.set('host', host);
             params.set('url', url);
+            if (redirectStream) {
+                params.set('redirect_stream', 'true');
+            }
             if (apiPassword) {
                 params.set('api_password', apiPassword);
             }
